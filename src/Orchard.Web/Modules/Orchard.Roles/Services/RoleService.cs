@@ -213,5 +213,32 @@ namespace Orchard.Roles.Services {
         private void TriggerSignal() {
             _signals.Trigger(SignalName);
         }
+
+        public void UserAddRole(int userId, string role) {
+            var roleRecord = GetRoleByName(role);
+            if (roleRecord == null) {
+                throw new Exception("Role not found");
+            }
+
+            var existingAssociation = _userRolesRepository.Get(record => record.UserId == userId && record.Role.Id == roleRecord.Id);
+            if (existingAssociation != null)
+                return;
+
+            //Context.Output.WriteLine(T("Adding role {0} to user {1}", roleRecord.Name, user.UserName));
+            _userRolesRepository.Create(new UserRolesPartRecord { Role = roleRecord, UserId = userId });
+        }
+
+        public bool IsUserInRole(int userId, string role) {
+            var roleRecord = GetRoleByName(role);
+            if (roleRecord == null) {
+                throw new Exception("Role not found");
+            }
+
+            var existingAssociation = _userRolesRepository.Get(record => record.UserId == userId && record.Role.Id == roleRecord.Id);
+            return (existingAssociation != null);
+
+            //Context.Output.WriteLine(T("Adding role {0} to user {1}", roleRecord.Name, user.UserName));
+            //_userRolesRepository.Create(new UserRolesPartRecord { Role = roleRecord, UserId = userId });
+        }
     }
 }

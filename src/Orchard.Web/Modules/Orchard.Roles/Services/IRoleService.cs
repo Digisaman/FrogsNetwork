@@ -23,5 +23,9 @@ namespace Orchard.Roles.Services {
         /// <param name="name">Role name</param>
         /// <returns>Returns false if a role with the given name already exits</returns>
         bool VerifyRoleUnicity(string name);
+
+        void UserAddRole(int userId, string role);
+
+        bool IsUserInRole(int userId, string role);
     }
 }
