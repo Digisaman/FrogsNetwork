@@ -1,0 +1,8 @@
+﻿@model PostBodyEditorViewModel
+@using NGM.Forum.ViewModels
+<fieldset>
+    <label>@T("Body")</label>
+    @*@Display.Post_Body_Editor(Model)*@
+    @Display.Body_Editor(EditorFlavor: "html", Text: Model.Text, AutoFocus: true)
+    @Html.ValidationMessageFor(m => m.Text)
+</fieldset>
